@@ -24,7 +24,7 @@ namespace Gimnasio
         {
             try
             {
-                string consulta = "INSERT INTO Planes(Nombre_Plan,Dias,Precio,Duracion,Estado,Codigo_Plan) Values('" + PL.Nombre_Plan + "','" + PL.Dias + "','" + PL.Precio + "','" + PL.Duracion + "'," +PL.Estado+ "',"+PL.Codigo_Plan + "')";
+                string consulta = "INSERT INTO Planes(Nombre_Plan,Dias,Precio,Duracion,Estado) Values('" + PL.Nombre_Plan + "','" + PL.Dias + "','" + PL.Precio + "','" + PL.Duracion + "'," +PL.Estado + "')";
                 SqlCommand comando = new SqlCommand(consulta, conectar());
                 comando.ExecuteNonQuery();
                 return true;
@@ -71,6 +71,22 @@ namespace Gimnasio
             da.Fill(ds);
             DataTable dt = ds.Tables[0];
             return dt;
+        }
+
+        public int CodigoNuevo()
+        {
+            int Cod = 0;
+            try
+            {
+                var consulta = "Select MAX (Codigo_plan + 1) 'Codigo nuevo' from Planes";
+                SqlCommand comando = new SqlCommand(consulta,conectar());
+                Cod = (int)comando.ExecuteScalar();
+            }
+            catch(Exception Ex)
+            {
+                MessageBox.Show(Ex.Message, "Error", MessageBoxButtons.OK);
+            }
+            return Cod;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Gimnasio
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Maximized;
+            this.WindowState = FormWindowState.Normal;
             btnMaximizar.Visible = false;
             btnRestaurar.Visible = true;
 
@@ -35,7 +35,7 @@ namespace Gimnasio
 
         private void btnRestaurar_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Normal;
+            this.WindowState = FormWindowState.Maximized;
             btnRestaurar.Visible = false;
             btnMaximizar.Visible = true;
         }
@@ -100,6 +100,12 @@ namespace Gimnasio
         private void btnPagos_Click(object sender, EventArgs e)
         {
             AbrirFormHijo(new frmPagos());
+        }
+
+        private void Form1_Load_1(object sender, EventArgs e)
+        {
+            this.WindowState=FormWindowState.Maximized;
+
         }
     }
 }

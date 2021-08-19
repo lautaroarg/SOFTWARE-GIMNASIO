@@ -162,12 +162,20 @@ namespace Gimnasio
 
         private void button1_Click(object sender, EventArgs e)
         {
+            var PM = new ProductosMetodos();
+            txtCodigoProducto.Text = PM.CodigoNuevo().ToString();
             txtNombreProducto.Text = "";
             txtCantidadProducto.Text = "";
             txtPrecioProducto.Text = "";
             cboCategoriaProducto.Text = "";
             cboEstado.Text = "";
-            txtCodigoProducto.Text = "";
+            
+        }
+
+        private void frmProductos_Load(object sender, EventArgs e)
+        {
+            var PM = new ProductosMetodos();
+            txtCodigoProducto.Text = PM.CodigoNuevo().ToString();
         }
     }
 }

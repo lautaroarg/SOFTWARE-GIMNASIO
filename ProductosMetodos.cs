@@ -24,7 +24,7 @@ namespace Gimnasio
         {
             try
             {
-                string consulta = "INSERT INTO Productos(Nombre_Producto,Cantidad_disponible,Precio_Producto,Categoria_Producto,Estado,Codigo_Producto) Values('" + PR.Nombre_Producto + "','" + PR.Cantidad_disponible + "','" + PR.Precio_Producto + "','" + PR.Categoria_Producto + "','" + PR.Estado + "','"+PR.Codigo_Producto + "')";
+                string consulta = "INSERT INTO Productos(Nombre_Producto,Cantidad_disponible,Precio_Producto,Categoria_Producto,Estado) Values('" + PR.Nombre_Producto + "','" + PR.Cantidad_disponible + "','" + PR.Precio_Producto + "','" + PR.Categoria_Producto + "','" + PR.Estado + "')";
                 SqlCommand comando = new SqlCommand(consulta, conectar());
                 comando.ExecuteNonQuery();
                 return true;
@@ -57,7 +57,7 @@ namespace Gimnasio
                 var query = "UPDATE Productos set Cantidad_disponible ='" + PR.Cantidad_disponible + "', Nombre_Producto ='" + PR.Nombre_Producto + "',Precio_Producto='" + PR.Precio_Producto + "',Estado='" + PR.Estado + "', Categoria_Producto='" + PR.Categoria_Producto + "' where Codigo_Producto='" + PR.Codigo_Producto + "'";
                 SqlCommand comando = new SqlCommand(query, conectar());
                 comando.ExecuteNonQuery();
-            }
+            } 
             catch (Exception Ex)
             {
                 MessageBox.Show(Ex.Message, "Error", MessageBoxButtons.OK);
@@ -72,5 +72,21 @@ namespace Gimnasio
             DataTable dt = ds.Tables[0];
             return dt;
         }
+        public int CodigoNuevo()
+        {
+            int Cod = 0;
+            try
+            { var consulta = "Select MAX (Codigo_Producto + 1) 'Codigo nuevo' from Productos ";
+                SqlCommand comando = new SqlCommand(consulta,conectar());
+                Cod = (int)comando.ExecuteScalar();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message,"Error",MessageBoxButtons.OK);
+            }
+            return Cod;
+        }
+
+
     }
 }

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
-
 namespace Gimnasio
 {
     class ClientesMetodos : Conexion
@@ -27,7 +26,7 @@ namespace Gimnasio
         {
             try
             {
-                var query = "INSERT INTO Clientes(DNI,Nombre,Apellido,Telefono,Fecha_Nacimiento,Genero,Estado,CodigoCliente) Values ('" + Cl.DNI + "','" + Cl.Nombre + "','" + Cl.Apellido + "','" + Cl.Telefono + "','" + Cl.Fecha_Nacimiento + "','" + Cl.genero + "','"+Cl.CodigoCliente   +"','" + Cl.Estado + "')";
+                var query = "INSERT INTO Clientes(DNI,Nombre,Apellido,Telefono,Fecha_Nacimiento,Genero,Estado) Values ('" + Cl.DNI + "','" + Cl.Nombre + "','" + Cl.Apellido + "','" + Cl.Telefono + "','" + Cl.Fecha_Nacimiento + "','" + Cl.genero + "','"+Cl.Estado   + "')";
                             
                 SqlCommand Comando = new SqlCommand(query, conectar());
                 Comando.ExecuteNonQuery();// Lo que ejecuto no es una consulta, es un COMANDO. (Comandos: Update, Insert y delete.)
@@ -66,6 +65,36 @@ namespace Gimnasio
             {
                 MessageBox.Show(Ex.Message, "Error", MessageBoxButtons.OK);
             }
+        }
+        public int CodigoNuevo()
+        {
+            int count = 0;
+            try
+            {
+                var consulta = "Select MAX(CodigoCliente + 1) 'Codigo nuevo' from Clientes";
+                SqlCommand comando = new SqlCommand(consulta, conectar());
+                count = (int)comando.ExecuteScalar();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+            }
+            return count;
+        }
+        public int TotalActivos()
+        {
+            int Total = 0;
+            try
+            {
+                var consulta = "Select count(Estado) from Clientes where Estado like 'H'";
+                SqlCommand comando = new SqlCommand(consulta,conectar());
+                Total = (int)comando.ExecuteScalar();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+            }
+            return Total;
         }
 
     }

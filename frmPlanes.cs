@@ -53,6 +53,7 @@ namespace Gimnasio
                     P.Duracion = txtDuracion.Text;
                     P.Precio = txtPrecio.Text;
                     P.Estado = cboEstado.Text;
+                    
                 }
                 var PM = new PlanesMetodos(); // creo un objeto de la clase metodo, que es donde estan las consultas.
                 Boolean Agregar = PM.AgregarPlan(P);
@@ -168,12 +169,20 @@ namespace Gimnasio
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            txtCodigoPlan.Text = "";
+            var PM = new PlanesMetodos();
+            txtCodigoPlan.Text = PM.CodigoNuevo().ToString();
             txtDuracion.Text = "";
             txtNombrePlan.Text = "";
             txtPrecio.Text = "";
             cboDias.Text = "";
             cboEstado.Text = "";
+        }
+
+        private void frmPlanes_Load(object sender, EventArgs e)
+        {
+            var PM = new PlanesMetodos();
+            txtCodigoPlan.Text= PM.CodigoNuevo().ToString();
+
         }
     }
 }

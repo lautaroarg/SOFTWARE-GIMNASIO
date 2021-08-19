@@ -54,7 +54,8 @@ namespace Gimnasio
                     Cl.genero = cboGenero.Text;
                     Cl.Telefono = txtTelefono.Text;
                     Cl.Fecha_Nacimiento = dtpFechaNacimiento.Text;
-                    Cl.Estado = cboEstado.Text;    
+                    Cl.Estado = cboEstado.Text;
+                    
                 }
                 var CLMET = new ClientesMetodos(); // creo un objeto de la clase metodo, que es donde estan las consultas.
                 Boolean Agregar = CLMET.AgregarCliente(Cl);
@@ -162,18 +163,42 @@ namespace Gimnasio
 
         private void CheckDeshabilitados_CheckedChanged(object sender, EventArgs e)
         {
-            var ds = new DataSet();
-            var dt = new DataTable();
-            var LM = new ListaMetodos();
-            dt = LM.ConsultaDeshabilitados();
-            if (dt.Rows.Count != 0)
+            if (CheckDeshabilitados.Checked == true)
             {
-                dataGridView1.DataSource = dt;
+                var ds = new DataSet();
+                var dt = new DataTable();
+                var LM = new ListaMetodos();
+                dt = LM.ConsultaDeshabilitados();
+                if (dt.Rows.Count != 0)
+                {
+                    dataGridView1.DataSource = dt;
+                }
+                else
+                {
+                    dataGridView1.DataSource = dt;
+                }
             }
             else
             {
-                dataGridView1.DataSource = dt;
+                var ds = new DataSet();
+                var dt = new DataTable();
+                var CM = new ClientesMetodos();
+                dt = CM.Consultar();
+                if (dt.Rows.Count != 0)
+                {
+                    dataGridView1.DataSource = dt;
+                }
+                else
+                {
+                    dataGridView1.DataSource = dt;
+                }
+
             }
+
+            
+            
+            
+            
         }
 
         private void btnDNI_Click(object sender, EventArgs e)
@@ -211,6 +236,10 @@ namespace Gimnasio
 
         private void frmClientes_Load(object sender, EventArgs e)
         {
+            var CM = new ClientesMetodos();
+            
+            txtCodigo.Text = CM.CodigoNuevo().ToString();
+            lbActivos.Text = CM.TotalActivos().ToString();
         }
 
         private void label12_Click(object sender, EventArgs e)
@@ -220,8 +249,11 @@ namespace Gimnasio
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
+            var CM = new ClientesMetodos();
+
+
+            txtCodigo.Text = CM.CodigoNuevo().ToString();
             txtApellido.Text = "";
-            txtCodigo.Text = "";
             txtDNI.Text = "";
             txtNombre.Text = "";
             txtTelefono.Text = "";
